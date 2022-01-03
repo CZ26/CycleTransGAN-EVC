@@ -11,4 +11,19 @@
 | to angry | [sample1](https://drive.google.com/file/d/1Ktu8xBBLIS-3Rini2AmeFp6XbaEnwx_E/view?usp=sharing) | [sample2](https://drive.google.com/file/d/1MMqGmy9Wdb4BHLCqn_tD7rAjz5mghMji/view?usp=sharing) |  [sample1](https://drive.google.com/file/d/1G8GbUv5UtU3m9kXEJ47jXb1bYZruFSpl/view?usp=sharing) | [sample2](https://drive.google.com/file/d/1Bf-CGFdTt_IfWAx7YO_7p4HklTHL7K6c/view?usp=sharing) |[sample1](https://drive.google.com/file/d/1DVvha0XyyJMnJLylUPKaaLtCEZ4bN-MD/view?usp=sharing) | [sample2](https://drive.google.com/file/d/1UL9l0zdE8t80TTKVLSErHtmx8WMoH6OG/view?usp=sharing)
 
 ## Training
-(available soon)
+### dependencies
+
+    Tensorflow 1.8
+    ProgressBar2 3.37.1
+    librosa 0.6
+    FFmpeg 4.0
+    PyWorld
+    sklearn
+    pycwt
+    sprocket-vc
+    script
+    glob
+
+To start training, simply run the command:
+
+    sh emotion_conversion-CL.sh (You may modified the path for dataset in this file)
