@@ -14,8 +14,8 @@
 ### dependencies
 
     Tensorflow 1.8
-    ProgressBar2 3.37.1
-    librosa 0.6
+    ProgressBar2
+    librosa
     FFmpeg 4.0
     PyWorld
     sklearn
