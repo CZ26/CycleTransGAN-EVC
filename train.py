@@ -138,55 +138,6 @@ def train(train_A_dir, train_B_dir, model_dir, model_name, random_seed, validati
                     wav_transformed = world_speech_synthesis(f0 = f0_converted, decoded_sp = decoded_sp_converted, ap = ap, fs = sampling_rate, frame_period = frame_period)
                     wav_transformed = np.nan_to_num(wav_transformed)
                     sf.write(os.path.join(validation_A_output_dir, str(epoch)+'_'+os.path.basename(file)), wav_transformed, sampling_rate)
-#                     file_name = file.split('.')[0]+'.wav'
-#                     validation_A_output_dir = validation_A_output_dir+'/'+str(epoch)+'/'
-#                     if not os.path.exists(validation_A_output_dir):
-#                         os.makedirs(validation_A_output_dir)
-            
-#                     sf.write(os.path.join(validation_A_output_dir, os.path.basename(file_name)), wav_transformed, sampling_rate)
-                    
-#                     if train_B_dir.split('/')[-2]=='anger':
-
-#                         x, fs = sf.read(os.path.join(validation_A_output_dir, os.path.basename(file)), sampling_rate)
-#                         _f0, t = pw.dio(x, fs, f0_floor=100.0, f0_ceil=800.0,
-#                                             channels_in_octave=2,
-#                                             frame_period=5.2,
-#                                             speed=1)
-#                         _f0 = _f0*0.98
-#                         _sp = pw.cheaptrick(x, _f0, t, fs)
-#                         _ap = pw.d4c(x, _f0, t, fs)
-#                         lent = int(0.65*_sp.shape[0])
-#                         print('_sp', _sp.shape)
-#                         print('lent', lent)
-#                         _y1 = pw.synthesize(_f0[:lent], _sp[:lent]*1.5, _ap[:lent], fs, 5)
-#                         _y2 = pw.synthesize(_f0[lent:], _sp[lent:]*1.5, _ap[lent:], fs, 4.5)
-# #                         _y = np.concatenate((_y1, _y2), 0)*2
-#                         _y = np.asarray(list(_y1)+list(_y2))
-#                         print('_y', len(_y))
-#                         sf.write(os.path.join(validation_A_output_dir, 'pw_'+os.path.basename(file)), _y, sampling_rate)
-                        
-#         if validation_B_dir is not None:
-#             if epoch % 5 == 0:
-#                 print('Generating Validation Data A from B...')
-#                 for file in os.listdir(validation_B_dir):
-#                     filepath = os.path.join(validation_B_dir, file)
-#                     wav, _ = librosa.load(filepath, sr = sampling_rate, mono = True)
-#                     wav = wav_padding(wav = wav, sr = sampling_rate, frame_period = frame_period, multiple = 4)
-#                     f0, timeaxis, sp, ap = world_decompose(wav = wav, fs = sampling_rate, frame_period = frame_period)
-#                     f0_converted = pitch_conversion(f0 = f0, mean_log_src = log_f0s_mean_B, std_log_src = log_f0s_std_B, mean_log_target = log_f0s_mean_A, std_log_target = log_f0s_std_A)
-#                     coded_sp = world_encode_spectral_envelop(sp = sp, fs = sampling_rate, dim = num_mcep)
-#                     coded_sp_transposed = coded_sp.T
-#                     coded_sp_norm = (coded_sp_transposed - coded_sps_B_mean) / coded_sps_B_std
-#                     coded_sp_converted_norm = model.test(inputs = np.array([coded_sp_norm]), direction = 'B2A')[0]
-#                     coded_sp_converted = coded_sp_converted_norm * coded_sps_A_std + coded_sps_A_mean
-#                     coded_sp_converted = coded_sp_converted.T
-#                     coded_sp_converted = np.ascontiguousarray(coded_sp_converted)
-#                     decoded_sp_converted = world_decode_spectral_envelop(coded_sp = coded_sp_converted, fs = sampling_rate)
-#                     wav_transformed = world_speech_synthesis(f0 = f0_converted, decoded_sp = decoded_sp_converted, ap = ap, fs = sampling_rate, frame_period = frame_period)
-#                     wav_transformed = np.nan_to_num(wav_transformed)
-# #                     librosa.output.write_wav(os.path.join(validation_B_output_dir, str(epoch)+'_'+os.path.basename(file)), wav_transformed, sampling_rate)
-# #                     sf.write(os.path.join(validation_B_output_dir, str(epoch)+'_'+os.path.basename(file)), wav_transformed, sampling_rate)
-#                     sf.write(os.path.join(validation_B_output_dir, os.path.basename(file)), wav_transformed, sampling_rate)
 
     model.save(directory = model_dir, filename = model_name)
 if __name__ == '__main__':
