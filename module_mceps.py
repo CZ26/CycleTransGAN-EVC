@@ -170,19 +170,25 @@ def generator_gatedcnn(inputs, reuse = False, scope_name = 'generator_gatedcnn')
         d1 = downsample1d_block(inputs = h1_glu, filters = 256, kernel_size = 5, strides = 2, name_prefix = 'downsample1d_block1_')
         d2 = downsample1d_block(inputs = d1, filters = 512, kernel_size = 5, strides = 2, name_prefix = 'downsample1d_block2_')
 
-        # Residual blocks
         r1 = residual1d_block(inputs = d2, filters = 1024, kernel_size = 3, strides = 1, name_prefix = 'residual1d_block1_')
+        
+        r1 = transformer(r1, attention_mask=None, hidden_size=512, num_hidden_layers=1, num_attention_heads=4, 
+                         intermediate_size=1024, intermediate_act_fn=gelu, hidden_dropout_prob=0.1, attention_probs_dropout_prob=0.1,
+                         initializer_range=0.02, do_return_all_layers=False, 
+                         use_position_emb=True, max_position_embeddings=1024, name = 'translayer1_')
+        
         r2 = residual1d_block(inputs = r1, filters = 1024, kernel_size = 3, strides = 1, name_prefix = 'residual1d_block2_')
-        r3 = residual1d_block(inputs = r2, filters = 1024, kernel_size = 3, strides = 1, name_prefix = 'residual1d_block3_')
-        r4 = residual1d_block(inputs = r3, filters = 1024, kernel_size = 3, strides = 1, name_prefix = 'residual1d_block4_')
-        r5 = residual1d_block(inputs = r4, filters = 1024, kernel_size = 3, strides = 1, name_prefix = 'residual1d_block5_')
-        r6 = residual1d_block(inputs = r5, filters = 1024, kernel_size = 3, strides = 1, name_prefix = 'residual1d_block6_')
-
-        # Upsample
-        u1 = upsample1d_block(inputs = r6, filters = 1024, kernel_size = 5, strides = 1, shuffle_size = 2, name_prefix = 'upsample1d_block1_')
+        
+        r2 = transformer(r2, attention_mask=None, hidden_size=512, num_hidden_layers=1, num_attention_heads=4, 
+                         intermediate_size=1024, intermediate_act_fn=gelu, hidden_dropout_prob=0.1, attention_probs_dropout_prob=0.1,
+                         initializer_range=0.02, do_return_all_layers=False, 
+                         use_position_emb=True, max_position_embeddings=1024, name = 'translayer2_')
+        
+#         r3 = residual1d_block(inputs = r2, filters = 1024, kernel_size = 3, strides = 1, name_prefix = 'residual1d_block3_')
+        
+        u1 = upsample1d_block(inputs = r2, filters = 1024, kernel_size = 5, strides = 1, shuffle_size = 2, name_prefix = 'upsample1d_block1_')
         u2 = upsample1d_block(inputs = u1, filters = 512, kernel_size = 5, strides = 1, shuffle_size = 2, name_prefix = 'upsample1d_block2_')
 
-        # Output
         o1 = conv1d_layer(inputs = u2, filters = 24, kernel_size = 15, strides = 1, activation = activation_fuc, name = 'o1_conv')
         o2 = tf.transpose(o1, perm = [0, 2, 1], name = 'output_transpose')
 
