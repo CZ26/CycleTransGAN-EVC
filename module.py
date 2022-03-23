@@ -190,9 +190,9 @@ def generator_gatedcnn(inputs, reuse = False, scope_name = 'generator_gatedcnn')
                          initializer_range=0.02, do_return_all_layers=False, 
                          use_position_emb=True, max_position_embeddings=1024, name = 'translayer2_')
         
-        r3 = residual1d_block(inputs = r2, filters = 1024, kernel_size = 3, strides = 1, name_prefix = 'residual1d_block3_')
+#         r3 = residual1d_block(inputs = r2, filters = 1024, kernel_size = 3, strides = 1, name_prefix = 'residual1d_block3_')
         
-        u1 = upsample1d_block(inputs = r3, filters = 1024, kernel_size = 5, strides = 1, shuffle_size = 2, name_prefix = 'upsample1d_block1_')
+        u1 = upsample1d_block(inputs = r2, filters = 1024, kernel_size = 5, strides = 1, shuffle_size = 2, name_prefix = 'upsample1d_block1_')
         u2 = upsample1d_block(inputs = u1, filters = 512, kernel_size = 5, strides = 1, shuffle_size = 2, name_prefix = 'upsample1d_block2_')
 
         o1 = conv1d_layer(inputs = u2, filters = 24, kernel_size = 15, strides = 1, activation = activation_fuc, name = 'o1_conv')
