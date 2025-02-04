@@ -1,5 +1,5 @@
 # CycleTransGAN-EVC
-[CycleTransGAN-EVC: A CycleGAN-based Emotional Voice Conversion Model with Transformer](https://arxiv.org/abs/2111.15159)
+[An improved CycleGAN-based emotional voice conversion model by augmenting temporal dependency with a transformer](https://www.sciencedirect.com/science/article/abs/pii/S0167639322001224)
 
 
 ## [Demo](https://cz26.github.io/DemoPage-CycleTransGAN-EmotionalSpeechConversion/)
